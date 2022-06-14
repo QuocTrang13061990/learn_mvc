@@ -1,0 +1,43 @@
+# CÁC CHÚ Ý
+    1. href trong thẻ a thì để là => _WEB_ROOT (http://localhost/learn_mvc_unicode)
+    2. require thì để là => _DIR (C:/xampp/htdocs/learn_mvc_unicode) 
+# CÁC HÀM HAY DÙNG
+    1. array_filter -> loại bỏ các phần tử trống của array. Ví dụ: array_filter(explode('/', $url)) => trong file App.php
+    2. extract($data) -> chuyển key của $data thành biến, để qua bên view gọi cho dễ nhìn: $productDetail = $data['productDetail'];
+    3. scandir($folder) -> lấy danh sánh các file trong folder (trả về array)
+    4. array_values($arr) -> trả về mảng tuần tự
+    5. unset($arr[i]) -> xoa phan tu arr 
+# TÓM TẮT CÁC BƯỚC LÀM (Tính từ database)
+    1. database (có thể gộp chung cấu hình và kết nối vào 1 file vẫn dc)
+        a. Cấu hình database (configs/database.php): host, user, pass, dbname, driver
+        b. Kết nối database qua PDO (core/Connection.php)
+            - Trong file bootstrap.php: 
+                - require tất cả các file từ thư mục configs
+                - require file connection.php 
+                - Gọi hàm getInstance($config_db) (tham số gửi qua hàm là thông tin: user, host, ...)
+            - Kiểm tra đã kết nối được với CSDL chưa -> var_dump($conn); ở bên file bootstrap.php hoặc Connection.php (sau dòng $conn=...)
+        c. Truy vấn CSDL (core/Model.php): Các model extends từ file này
+####################################
+# file gốc
+    0. .htaccess: hỗ trợ việc require
+            RewriteEngine On 
+            RewriteCond %{REQUEST_FILENAME} !-d 
+            RewriteCond %{REQUEST_FILENAME} !-f 
+            RewriteRule ^(.+)$ index.php?url=$1
+
+            RewriteRule ^(.+)$ index.php/$1 [L,QSA] -> unicode (không dùng)
+            note: Khi có 2 dòng (-d, -f) thì được phép truy cập vào file,  ví dụ: style.css, khi click vào thì truy cập được
+    1. index.php
+    2. bootstrap.php
+
+# folder:  
+    1. app
+        a. App.php: 
+            - Xử lý Url
+            - require controller và tạo đối tượng tương ứng
+            - require action
+    2. core 
+        a. Model.php (Truy vấn CSDL => các model extends từ Model này)
+        b. Connection.php (Kết nối csdl bằng PDO)
+            - The singleton pattern in PHP (tránh việc kết nối db nhiều lần)
+            - link tham khảo-đọc kỹ bài báo-rất hay: phpenthusiast.com/blog/the-singleton-design-pattern-in-php 
