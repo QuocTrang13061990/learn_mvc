@@ -17,6 +17,10 @@
                 - Gọi hàm getInstance($config_db) (tham số gửi qua hàm là thông tin: user, host, ...)
             - Kiểm tra đã kết nối được với CSDL chưa -> var_dump($conn); ở bên file bootstrap.php hoặc Connection.php (sau dòng $conn=...)
         c. Truy vấn CSDL (core/Model.php): Các model extends từ file này
+            - File này không extends từ connection nhưng đã require file connection.php trước khi require Model.php ở bootstrap.php nên ta có thể dùng class Connection được.
+            - Connection::getInstance($config_db): ok
+            - $this->getInstance($config_db): k được -> nếu muốn dùng $this như này thì cần extends class Connection.
+            - Để kiểm tra kết nối db được chưa thì có thể var_dump(Connection::getInstance($config_db)) -> trả về object thì ok.
 ####################################
 # file gốc
     0. .htaccess: hỗ trợ việc require

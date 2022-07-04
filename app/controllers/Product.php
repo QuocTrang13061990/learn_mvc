@@ -28,4 +28,7 @@ class Product extends Controller {
         ];
         $this->loadView('layouts/admin_layout', $dataProductDetailArr);
     }
+
+   
 }
+?>

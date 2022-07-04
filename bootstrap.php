@@ -36,8 +36,12 @@ if(!empty($config['database'])) {
     $config_db = array_filter($config['database']);
     if(!empty($config_db)) {
         require_once 'core/connection.php';
-        $conn = Connection::getInstance($config_db);// kết nối đến db (chạy _construct trong class Connection), nếu chạy thêm 1 lần nữa thì cũng chỉ kết nối đúng 1 lần (bên hàm getInstance đã có phần check), lẽ ra là 2 lần. Đây là cái hay của singleton
-
+        // $conn = Connection::getInstance($config_db);// kết nối đến db (chạy _construct trong class Connection), nếu chạy thêm 1 lần nữa thì cũng chỉ kết nối đúng 1 lần (bên hàm getInstance đã có phần check), lẽ ra là 2 lần. Đây là cái hay của singleton
+        require_once 'core/Model.php';
+        // $db = new Model();
+        // $query = $db->firstRaw('services');
+        // echo '<pre>';
+        // print_r($query);
     }
 }
 require_once './core/Controller.php';
